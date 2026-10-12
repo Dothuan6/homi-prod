@@ -897,10 +897,10 @@ class Component extends DCLogic {
           // mà đổi điểm vẫn giữ mô hình duyệt 2 lượt.
           statusLabel: this.MEMBER_STATUS_LABEL[effStatus] || label,
           uplineCode: up ? ALIAS[up.id] : '',
-          formLink: 'homi365.com.vn/' + affCode, formLinkShort: '.../' + affCode,
-          loginLink: 'homi365.com.vn/dang-nhap/' + affCode, loginLinkShort: '.../dang-nhap/' + affCode,
-          copyFormLink: (e) => { e.stopPropagation(); navigator.clipboard.writeText('homi365.com.vn/' + affCode); this.setState({ copiedLinkId: 'form-' + m.id }); setTimeout(() => this.setState(st => st.copiedLinkId === 'form-' + m.id ? { copiedLinkId: null } : null), 1500); },
-          copyLoginLink: (e) => { e.stopPropagation(); navigator.clipboard.writeText('homi365.com.vn/dang-nhap/' + affCode); this.setState({ copiedLinkId: 'login-' + m.id }); setTimeout(() => this.setState(st => st.copiedLinkId === 'login-' + m.id ? { copiedLinkId: null } : null), 1500); },
+          formLink: 'https://homi365.com.vn/' + affCode, formLinkShort: '.../' + affCode,
+          loginLink: 'https://homi365.com.vn/agent/dang-nhap', loginLinkShort: '.../agent/dang-nhap',
+          copyFormLink: (e) => { e.stopPropagation(); navigator.clipboard.writeText('https://homi365.com.vn/' + affCode); this.setState({ copiedLinkId: 'form-' + m.id }); setTimeout(() => this.setState(st => st.copiedLinkId === 'form-' + m.id ? { copiedLinkId: null } : null), 1500); },
+          copyLoginLink: (e) => { e.stopPropagation(); navigator.clipboard.writeText('https://homi365.com.vn/agent/dang-nhap'); this.setState({ copiedLinkId: 'login-' + m.id }); setTimeout(() => this.setState(st => st.copiedLinkId === 'login-' + m.id ? { copiedLinkId: null } : null), 1500); },
           formLinkCopyIcon: s.copiedLinkId === 'form-' + m.id ? '✓' : '⧉', loginLinkCopyIcon: s.copiedLinkId === 'login-' + m.id ? '✓' : '⧉',
           onClick: () => this.setState({ selectedMemberId: m.id }) };
       });
@@ -1519,7 +1519,7 @@ class Component extends DCLogic {
       tncChecked: s.tncChecked, toggleTnc: () => this.setState({ tncChecked: !s.tncChecked }),
       tncDisabled, regSubmitStyle,
       copyLabel: s.copyLabel,
-      copyLink: () => { navigator.clipboard.writeText('homi365.com.vn/htmt0083'); this.setState({ copyLabel: 'Đã copy!' }); setTimeout(() => this.setState({ copyLabel: 'Copy link' }), 1500); },
+      copyLink: () => { navigator.clipboard.writeText('https://homi365.com.vn/HTMT0083'); this.setState({ copyLabel: 'Đã copy!' }); setTimeout(() => this.setState({ copyLabel: 'Copy link' }), 1500); },
       goToA3: () => GO('A3'),
 
       toggleAgentStage: () => this.setState({ agentStage: s.agentStage === 'new' ? 'active' : 'new' }),
@@ -2139,7 +2139,7 @@ class Component extends DCLogic {
       // Chốt 09/09: agent chỉ có MỘT link. Mã giới thiệu = alias theo
       // 8.1.C-4 (viết tắt họ tên + 4 số cuối SĐT), trùng thì thêm -2, -3…
       refCode: 'HTMT0083',
-      refLink: 'homi365.com.vn/htmt0083',
+      refLink: 'https://homi365.com.vn/HTMT0083',
 
       orderTotal: (s.ordersData || []).length,
       orderPendingCount: (s.ordersData || []).filter(o => o.status === 'order_pending').length,

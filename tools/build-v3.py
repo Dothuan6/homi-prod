@@ -3844,6 +3844,10 @@ def main():
                .replace("../index.html", home))
         if t2 != t:
             f.write_text(t2, encoding="utf-8")
+    # (12/10) Trang theo URL thật (/<MÃ>, /agent/dang-nhap, /policy?s=…) cho GitHub Pages.
+    import importlib.util as _ilu
+    _sp = _ilu.spec_from_file_location("build_routes", HERE / "build-routes.py")
+    _br = _ilu.module_from_spec(_sp); _sp.loader.exec_module(_br); _br.main()
 
     # --- báo cáo đổi màu ---------------------------------------------------
     all_out = "".join((V3 / "screens" / f).read_text(encoding="utf-8")
