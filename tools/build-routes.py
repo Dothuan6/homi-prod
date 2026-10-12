@@ -66,22 +66,54 @@ def link(code, depth):
     return (p + r) if r else (p or "./")
 
 
-# Trang gốc: nhận /<MÃ> (từ 404.html hoặc gõ thẳng) -> điền mã giới thiệu.
+# Mã giới thiệu hợp lệ (site tĩnh, không có database) -> tên hiện ở ô "Mã giới thiệu".
+# Mã ngoài danh sách, hoặc vào trang gốc không có mã -> màn thông báo
+# "Vui lòng dùng liên kết giới thiệu của người bán…". Thêm mã: sửa ở đây rồi chạy lại.
+# Không có PTD4789 (Phạm Thị Dung — tài khoản đang khoá).
+VALID_REF = {
+    "SA2237": "",
+    "HTMT0083": "HOÀNG THỊ MỸ TRINH",
+    "TTB4123": "TRẦN THỊ BÍCH",
+    "LVC5456": "LÊ VĂN CƯỜNG",
+    "NTE3112": "NGÔ THỊ EM",
+    "VMK7998": "VŨ MINH KHANG",
+    "DVP8221": "ĐẶNG VĂN PHÚC",
+    "TTB4123-2": "TRƯƠNG THANH BÌNH",
+}
+
+# Trang gốc: nhận /<MÃ> (từ 404.html, _redirects hoặc gõ thẳng).
 BOOT_A1 = """<script>
 (function () {
+  var VALID = __VALID__;
   var q = new URLSearchParams(location.search), p = q.get('__p');
   if (p) {
     q.delete('__p'); var qs = q.toString();
     history.replaceState(null, '', location.pathname.replace(/[^\\/]*$/, '') + p + (qs ? '?' + qs : '') + location.hash);
   }
   var seg = decodeURIComponent(location.pathname.split('/').pop() || '');
-  if (seg && !/\\.html?$/i.test(seg)) {
-    var code = seg.toUpperCase();
+  if (/\\.html?$/i.test(seg)) seg = '';
+  var code = seg.toUpperCase();
+  if (code && Object.prototype.hasOwnProperty.call(VALID, code)) {
     window.__REF_CODE = code;
-    window.__REF_LABEL = code === 'HTMT0083' ? 'HTMT0083 — HOÀNG THỊ MỸ TRINH' : code;
+    window.__REF_LABEL = VALID[code] ? code + ' — ' + VALID[code] : code;
+    try { sessionStorage.setItem('__homi_ref', code); } catch (e) {}
+  } else {
+    document.documentElement.classList.add('homi-noref');
   }
 })();
-</script>"""
+</script>
+<style>
+  .homi-noref-msg{display:none}
+  .homi-noref .homi-noref-msg{display:flex}
+  .homi-noref .homi-a1-main,.homi-noref .homi-buyphone{display:none!important}
+</style>"""
+
+NOREF_MSG = """  <div class="homi-noref-msg" style="justify-content:center;padding:var(--s8) var(--s7) var(--s10)">
+    <div style="width:100%;max-width:1160px;background:var(--c12);border:1px solid rgba(154,163,176,.25);border-radius:var(--r-lg);box-shadow:var(--sh);padding:var(--s9) var(--s8);text-align:center;font-size:15px;line-height:1.6;color:var(--c4)">Vui lòng dùng liên kết giới thiệu của người bán (dạng homi365.com.vn/&lt;mã giới thiệu&gt;) để tiếp tục mua hàng.</div>
+  </div>
+"""
+A1_MAIN = """  <sc-if value="{{isA1}}" hint-placeholder-val="{{true}}">
+  <div style="display:flex;flex-direction:column;align-items:center;gap:var(--s7);padding:var(--s8) var(--s7) var(--s10);background:var(--warm-50)">"""
 
 PAGE_404 = """<!DOCTYPE html>
 <html lang="vi">
@@ -119,7 +151,10 @@ def render(src_text, code, depth):
     by_file = {f: c for c, f in FILE.items()}
     t = HREF_RE.sub(lambda m: 'href="' + link(by_file[m.group(1)], depth), t)
     files = {c: link(c, depth) for c in FILE if c != "POLICY"}
-    t, n = FILES_RE.subn(lambda m: "window.__FILES = %s;" % json.dumps(files), t)
+    # Quay lại form (vd đăng nhập từ form mua hàng xong) -> về đúng /<MÃ> đã vào.
+    t, n = FILES_RE.subn(lambda m: "window.__FILES = %s;\n"
+                         "try { var __r = sessionStorage.getItem('__homi_ref'); "
+                         "if (__r) window.__FILES.A1 += __r; } catch (e) {}" % json.dumps(files), t)
     if code != "POLICY" and n != 1:
         raise SystemExit("%s: không tìm thấy window.__FILES" % FILE[code])
     # Ô "Mã giới thiệu" ở form A1 lấy theo URL /<MÃ>.
@@ -128,7 +163,12 @@ def render(src_text, code, depth):
                   "buyRefLabel: window.__REF_LABEL || 'HTMT0083 — HOÀNG THỊ MỸ TRINH',\n"
                   "      showUplineBlockedModal: s.showUplineBlockedModal,", 1)
     if code == "A1":
-        t = t.replace('<meta charset="utf-8">', '<meta charset="utf-8">\n' + BOOT_A1, 1)
+        boot = BOOT_A1.replace("__VALID__", json.dumps(VALID_REF, ensure_ascii=False))
+        t = t.replace('<meta charset="utf-8">', '<meta charset="utf-8">\n' + boot, 1)
+        if A1_MAIN not in t:
+            raise SystemExit("a1-buy.html: không tìm thấy khối A1 để chèn màn thông báo")
+        t = t.replace(A1_MAIN, NOREF_MSG + A1_MAIN.replace(
+            '<div style="display:flex', '<div class="homi-a1-main" style="display:flex', 1), 1)
     if "../index.html" in t or ".html?s=" in t:
         raise SystemExit("%s: còn link kiểu cũ" % FILE[code])
     return t

@@ -39,7 +39,7 @@ Các trang ở thư mục gốc được sinh từ `screens/` bằng `python too
 | URL | Màn | File |
 |---|---|---|
 | `/<MÃ>` — vd `https://homi365.com.vn/SA2237` | A1 Form mua hàng, ô Mã giới thiệu lấy theo URL | `404.html` → `index.html` |
-| `/` | A1 Form mua hàng | `index.html` |
+| `/`, `/<mã sai>`, đường dẫn sai | Màn thông báo "Vui lòng dùng liên kết giới thiệu của người bán…" | `index.html` |
 | `/policy?s=dieu-khoan-thanh-vien` | Chính sách | `policy.html` |
 | `/agent/dang-nhap` | C1 Đăng nhập thành viên | `agent/dang-nhap.html` |
 | `/agent/dang-ky` | A2 Đăng ký thành viên | `agent/dang-ky.html` |
@@ -58,3 +58,7 @@ Trạng thái xem thử vẫn mở bằng `#hash`, vd `/admin/thanh-vien#chi-tie
 Link hiển thị/copy trong giao diện dùng full URL: link giới thiệu `https://homi365.com.vn/<MÃ>`,
 link đăng nhập `https://homi365.com.vn/agent/dang-nhap`.
 Chạy được cả khi gắn domain riêng (gốc `/`) lẫn `dothuan6.github.io/homi-prod/`.
+
+Mã giới thiệu hợp lệ là danh sách cố định `VALID_REF` trong `tools/build-routes.py`
+(site tĩnh, không có database). Thêm/bớt mã: sửa danh sách, chạy lại script, deploy lại.
+Netlify dùng `_redirects` (trả 200); GitHub Pages dùng `404.html`.

@@ -4,19 +4,29 @@
 <meta charset="utf-8">
 <script>
 (function () {
+  var VALID = {"SA2237": "", "HTMT0083": "HOÀNG THỊ MỸ TRINH", "TTB4123": "TRẦN THỊ BÍCH", "LVC5456": "LÊ VĂN CƯỜNG", "NTE3112": "NGÔ THỊ EM", "VMK7998": "VŨ MINH KHANG", "DVP8221": "ĐẶNG VĂN PHÚC", "TTB4123-2": "TRƯƠNG THANH BÌNH"};
   var q = new URLSearchParams(location.search), p = q.get('__p');
   if (p) {
     q.delete('__p'); var qs = q.toString();
     history.replaceState(null, '', location.pathname.replace(/[^\/]*$/, '') + p + (qs ? '?' + qs : '') + location.hash);
   }
   var seg = decodeURIComponent(location.pathname.split('/').pop() || '');
-  if (seg && !/\.html?$/i.test(seg)) {
-    var code = seg.toUpperCase();
+  if (/\.html?$/i.test(seg)) seg = '';
+  var code = seg.toUpperCase();
+  if (code && Object.prototype.hasOwnProperty.call(VALID, code)) {
     window.__REF_CODE = code;
-    window.__REF_LABEL = code === 'HTMT0083' ? 'HTMT0083 — HOÀNG THỊ MỸ TRINH' : code;
+    window.__REF_LABEL = VALID[code] ? code + ' — ' + VALID[code] : code;
+    try { sessionStorage.setItem('__homi_ref', code); } catch (e) {}
+  } else {
+    document.documentElement.classList.add('homi-noref');
   }
 })();
 </script>
+<style>
+  .homi-noref-msg{display:none}
+  .homi-noref .homi-noref-msg{display:flex}
+  .homi-noref .homi-a1-main,.homi-noref .homi-buyphone{display:none!important}
+</style>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>A1 · Thông tin nhận hàng · HOMI365</title>
 <link rel="icon" href="assets/Icon_viewweb_final.jpg">
@@ -27,6 +37,7 @@
 <link rel="stylesheet" href="css/responsive.css">
 <script>
 window.__FILES = {"A1": "./", "A2": "agent/dang-ky", "A3": "agent", "C1": "agent/dang-nhap", "B1": "admin/dang-nhap", "B2": "admin/thanh-vien", "B3": "admin/doi-diem", "B4": "admin/kho-hang", "B5": "admin/san-pham", "B6": "admin/don-hang", "B7": "admin/tai-khoan", "B8": "admin/nhat-ky", "B9": "admin/xet-hang"};
+try { var __r = sessionStorage.getItem('__homi_ref'); if (__r) window.__FILES.A1 += __r; } catch (e) {}
 window.__STATE__ = {"buyStep": "phone", "screen": "A1"};
 // dữ liệu mang sang từ màn trước (bấm nút điều hướng)
 try { var c = sessionStorage.getItem('__homi_carry');
@@ -51,8 +62,11 @@ if (H[h]) Object.assign(window.__STATE__, H[h]);
   </div>
 
   <!-- ================= A1 THÔNG TIN NHẬN HÀNG ================= -->
+  <div class="homi-noref-msg" style="justify-content:center;padding:var(--s8) var(--s7) var(--s10)">
+    <div style="width:100%;max-width:1160px;background:var(--c12);border:1px solid rgba(154,163,176,.25);border-radius:var(--r-lg);box-shadow:var(--sh);padding:var(--s9) var(--s8);text-align:center;font-size:15px;line-height:1.6;color:var(--c4)">Vui lòng dùng liên kết giới thiệu của người bán (dạng homi365.com.vn/&lt;mã giới thiệu&gt;) để tiếp tục mua hàng.</div>
+  </div>
   <sc-if value="{{isA1}}" hint-placeholder-val="{{true}}">
-  <div style="display:flex;flex-direction:column;align-items:center;gap:var(--s7);padding:var(--s8) var(--s7) var(--s10);background:var(--warm-50)">
+  <div class="homi-a1-main" style="display:flex;flex-direction:column;align-items:center;gap:var(--s7);padding:var(--s8) var(--s7) var(--s10);background:var(--warm-50)">
     <div style="width:100%;max-width:1160px;display:grid;grid-template-columns:1fr 380px;gap:var(--s8);align-items:start;{{buyLockCss}}">
 
       <div style="display:flex;flex-direction:column;gap:var(--s7)">
