@@ -70,7 +70,7 @@ def link(code, depth):
 
 # Mã giới thiệu hợp lệ (site tĩnh, không có database) -> tên hiện ở ô "Mã giới thiệu".
 # Mã ngoài danh sách, hoặc vào trang gốc không có mã -> màn thông báo
-# "Vui lòng dùng liên kết giới thiệu của người bán…". Thêm mã: sửa ở đây rồi chạy lại.
+# "Vui lòng dùng liên kết giới thiệu của thành viên HOMI365…". Thêm mã: sửa ở đây rồi chạy lại.
 # Không có PTD4789 (Phạm Thị Dung — tài khoản đang khoá).
 VALID_REF = {
     "SA2237": "",
@@ -112,7 +112,7 @@ BOOT_A1 = """<script>
 </style>"""
 
 NOREF_MSG = """  <div class="homi-noref-msg" style="justify-content:center;padding:var(--s8) var(--s7) var(--s10)">
-    <div style="width:100%;max-width:1160px;background:var(--c12);border:1px solid rgba(154,163,176,.25);border-radius:var(--r-lg);box-shadow:var(--sh);padding:var(--s9) var(--s8);text-align:center;font-size:15px;line-height:1.6;color:var(--c4)">Vui lòng dùng liên kết giới thiệu của người bán (dạng homi365.com.vn/&lt;mã giới thiệu&gt;) để tiếp tục mua hàng.</div>
+    <div style="width:100%;max-width:1160px;background:var(--c12);border:1px solid rgba(154,163,176,.25);border-radius:var(--r-lg);box-shadow:var(--sh);padding:var(--s9) var(--s8);text-align:center;font-size:15px;line-height:1.6;color:var(--c4)">Vui lòng dùng liên kết giới thiệu của thành viên HOMI365 (dạng homi365.com.vn/&lt;mã giới thiệu&gt;) để tiếp tục mua hàng.</div>
   </div>
 """
 A1_MAIN = """  <sc-if value="{{isA1}}" hint-placeholder-val="{{true}}">
