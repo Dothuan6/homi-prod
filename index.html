@@ -19,6 +19,7 @@
     try { sessionStorage.setItem('__homi_ref', code); } catch (e) {}
   } else {
     document.documentElement.classList.add('homi-noref');
+    document.addEventListener('DOMContentLoaded', function () { document.title = 'HOMI365'; });
   }
 })();
 </script>
@@ -28,7 +29,7 @@
   .homi-noref .homi-a1-main,.homi-noref .homi-buyphone{display:none!important}
 </style>
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>A1 · Thông tin nhận hàng · HOMI365</title>
+<title>Thông tin nhận hàng · HOMI365</title>
 <link rel="icon" href="assets/Icon_viewweb_final.jpg">
 <meta name="theme-color" content="#1E3A66">
 <link rel="stylesheet" href="css/fonts.css">

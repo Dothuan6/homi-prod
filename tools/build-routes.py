@@ -57,6 +57,8 @@ def fix_links(t):
     t = t.replace("'.../dang-nhap/' + affCode", "'.../agent/dang-nhap'")
     t = t.replace("'homi365.com.vn/' + affCode", "'%s/' + affCode" % DOMAIN)
     t = t.replace("'homi365.com.vn/htmt0083'", "'%s/HTMT0083'" % DOMAIN)
+    # Tiêu đề tab: bỏ mã màn ("A1 · Thông tin nhận hàng · HOMI365" -> "Thông tin nhận hàng · HOMI365").
+    t = re.sub(r"<title>[A-C]\d+ · ", "<title>", t)
     return t
 
 
@@ -99,6 +101,7 @@ BOOT_A1 = """<script>
     try { sessionStorage.setItem('__homi_ref', code); } catch (e) {}
   } else {
     document.documentElement.classList.add('homi-noref');
+    document.addEventListener('DOMContentLoaded', function () { document.title = 'HOMI365'; });
   }
 })();
 </script>
