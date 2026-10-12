@@ -1,0 +1,17 @@
+# Sinh bởi tools/build-routes.py — không sửa tay.
+/policy                 /policy.html                200
+/agent                  /agent.html                 200
+/agent/dang-nhap        /agent/dang-nhap.html       200
+/agent/dang-ky          /agent/dang-ky.html         200
+/admin                  /admin.html                 200
+/admin/dang-nhap        /admin/dang-nhap.html       200
+/admin/thanh-vien       /admin/thanh-vien.html      200
+/admin/doi-diem         /admin/doi-diem.html        200
+/admin/kho-hang         /admin/kho-hang.html        200
+/admin/san-pham         /admin/san-pham.html        200
+/admin/don-hang         /admin/don-hang.html        200
+/admin/tai-khoan        /admin/tai-khoan.html       200
+/admin/nhat-ky          /admin/nhat-ky.html         200
+/admin/xet-hang         /admin/xet-hang.html        200
+# /<MÃ GIỚI THIỆU>, vd /SA2237 -> form mua hàng A1
+/:code                  /index.html                 200

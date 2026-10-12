@@ -9,7 +9,7 @@ Sinh các trang theo URL thật của hệ thống HOMI365 từ screens/*.html.
     https://homi365.com.vn/agent               -> A3 Dashboard thành viên
     https://homi365.com.vn/admin/...           -> B1..B9 quản trị
 
-Host trên GitHub Pages: file foo.html được phục vụ ở /foo (không đuôi .html).
+Host trên Netlify (_redirects) hoặc GitHub Pages: file foo.html được phục vụ ở /foo (không đuôi .html).
 Đường dẫn còn lại (vd /SA2237) rơi vào 404.html -> chuyển về trang gốc kèm
 ?__p=SA2237, trang gốc đổi lại thanh địa chỉ thành /SA2237 và điền mã giới thiệu.
 Chạy được cả khi site nằm ở domain riêng (gốc /) lẫn <user>.github.io/homi-prod/.
@@ -149,7 +149,17 @@ def main():
         print("  %-26s <- %s" % (path, FILE[code]))
     (SITE / "404.html").write_text(PAGE_404, encoding="utf-8")
     (SITE / ".nojekyll").write_text("", encoding="utf-8")
-    print("  404.html, .nojekyll")
+    # Netlify: rewrite 200 (không đổi URL, không qua 404). File có thật luôn
+    # được ưu tiên hơn rule, nên /css/..., /agent/dang-nhap... không bị ảnh hưởng.
+    rules = ["# Sinh bởi tools/build-routes.py — không sửa tay."]
+    for path, code in OUT:
+        if path in ("index.html",) or path.endswith("/index.html"):
+            continue
+        rules.append("/%-22s /%-26s 200" % (path[:-5], path))
+    rules.append("# /<MÃ GIỚI THIỆU>, vd /SA2237 -> form mua hàng A1")
+    rules.append("/%-22s /%-26s 200" % (":code", "index.html"))
+    (SITE / "_redirects").write_text("\n".join(rules) + "\n", encoding="utf-8")
+    print("  404.html, .nojekyll, _redirects (Netlify)")
 
 
 if __name__ == "__main__":
