@@ -1,0 +1,54 @@
+/* ============================================================
+   HOMI365 · prototype-v3 — bảng màu
+   Tên biến giữ NGUYÊN của mockup KH, chỉ đổi giá trị.
+   Sinh tự động bởi tools/build-v3.py — đừng sửa tay,
+   sửa bảng COLORS trong script rồi chạy lại.
+   ============================================================ */
+:root {
+  --c1: #2B303A;   /* was #1F1F1F */
+  --c2: #5B6472;   /* was #424242 */
+  --c4: #5B6472;   /* was #414445 */
+  --c5: #8A93A3;   /* was #939393 */
+  --c6: #1E3A66;   /* was #00ADEE */
+  --c8: #2F7A48;   /* was #84BE52 */
+  --c9: #965C0A;   /* was #FFA500 */
+  --c10: #965C0A;   /* was #FBAE40 */
+  --c11: #E0B15F;   /* was #FFBC40 */
+  --c3: #1B3358;   /* was #344557 */
+  --c7: #C9CED4;   /* was #AAAAAA */
+  --c12: #FFFFFF;
+  --err: #C0392B;   /* was #D9342B */
+  --s1: 5px;
+  --s2: 6px;
+  --s3: 8px;
+  --s4: 10px;
+  --s5: 12px;
+  --s6: 15px;
+  --s7: 16px;
+  --s8: 20px;
+  --s9: 30px;
+  --s10: 40px;
+  --s11: 50px;
+  --r-sm: 4px;
+  --r-md: 5px;
+  --r-lg: 6px;
+  --r-xl: 30px;
+  --r-full: 50%;
+  --sh: 1px 1px 5px 0 rgba(18,37,68,.16);   /* was 1px 1px 5px 0 rgba(204,204,204,.9) */
+  --ff: 'Roboto','Nunito',sans-serif;
+
+  /* Bổ sung: nền trang ấm của HOMI365 (prototype-v2 --warm-50).
+     Thẻ/card vẫn dùng --c12 trắng -> section xen kẽ ấm / trắng. */
+  --warm-50: #FAF8F3;
+
+  /* Bổ sung: màu cột biểu đồ — teal-500 của HOMI365.
+     Dùng teal thay navy để biểu đồ tách khỏi nút/link màu chính. */
+  --c-chart: #1BA3BE;
+}
+
+/* Vòng focus — mockup KH không có, thêm để đạt WCAG 2.4.7.
+   Không ảnh hưởng layout. */
+:where(a, button, input, select, textarea):focus-visible {
+  outline: 2px solid #0F7F96;
+  outline-offset: 2px;
+}

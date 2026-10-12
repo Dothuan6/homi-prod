@@ -1,0 +1,170 @@
+/* ============================================================
+   HOMI365 · prototype-v3 — lớp responsive
+   Sinh tự động bởi tools/build-v3.py — đừng sửa tay,
+   sửa RESPONSIVE_CSS trong script rồi chạy lại.
+
+   Toàn bộ quy tắc nằm trong media query: màn >=1025px giữ nguyên
+   bố cục desktop KH đã duyệt. Dùng [style*="…"] + !important vì
+   markup gốc không có class để bám.
+   ============================================================ */
+
+img { max-width: 100%; }
+
+/* --- Thanh trên -------------------------------------------------------- */
+/* Logo 71px cao = 174px ngang, cộng nút đăng nhập ~230px là 404px — tràn mọi
+   điện thoại. Dưới 720px cho nút xuống hàng riêng và chiếm trọn bề ngang. */
+@media (max-width: 720px) {
+  .homi-topbar { padding-left: var(--s5) !important; padding-right: var(--s5) !important; }
+  .homi-topbar-in { flex-wrap: wrap; gap: var(--s4); }
+  .homi-logo img { height: 40px !important; }
+  .homi-login {
+    margin-left: 0 !important;
+    width: 100%;
+    justify-content: center;
+    white-space: normal !important;
+    height: auto !important;
+    min-height: 40px;
+    padding: var(--s3) var(--s5) !important;
+    text-align: center;
+  }
+  /* (08/10) A1: ô SĐT trên header xuống hàng, chiếm trọn bề ngang. */
+  .homi-buyphone { margin-left: 0 !important; width: 100%; flex-wrap: wrap; }
+  .homi-buyphone-lbl { max-width: none !important; width: 100%; margin-right: 0 !important; }
+  .homi-buyphone-ok { white-space: normal !important; position: static !important; }
+  .homi-buyphone > .homi-buyphone-in { flex: 1; }
+  .homi-buyphone input { width: 100% !important; }
+}
+@media (max-width: 420px) {
+  .homi-logo img { height: 34px !important; }
+}
+
+/* --- Bố cục hai cột của màn công khai ---------------------------------- */
+@media (max-width: 900px) {
+  /* A1: form nhận hàng | tóm tắt đơn 380px */
+[style*="grid-template-columns:1fr 380px"],
+[style*="grid-template-columns: 1fr 380px"] { grid-template-columns: 1fr !important; }
+  /* Footer: khối pháp nhân | cột chính sách */
+  .footer-grid { grid-template-columns: 1fr !important; gap: var(--s7) !important; }
+}
+
+/* --- Cặp ô nhập trong form (A1, A2) ------------------------------------ */
+/* Chỉ nhắm cặp dùng gap:var(--s7) — đó là các hàng ô nhập. Cặp dùng
+   gap:var(--s5) là thẻ số liệu trong cột hẹp 430px của A3 và trong ngăn
+   chi tiết quản trị; hai cột ở đó vẫn đọc tốt trên điện thoại nên để yên. */
+@media (max-width: 640px) {
+[style*="grid-template-columns:1fr 1fr;gap:var(--s7)"],
+[style*="grid-template-columns: 1fr 1fr; gap: var(--s7)"] { grid-template-columns: 1fr !important; }
+}
+
+/* --- Khung quản trị B2…B7 ---------------------------------------------- */
+/* Cột điều hướng dọc 220px -> dải nút ngang cuộn được, đặt ngay dưới thanh
+   trên. Hai nhãn nhóm ("Vận hành", "Vai trò (demo)") bị ẩn vì nằm ngang thì
+   chúng chỉ chiếm chỗ mà không thêm nghĩa. */
+@media (max-width: 900px) {
+[style*="grid-template-columns:220px 1fr"],
+[style*="grid-template-columns: 220px 1fr"] {
+  grid-template-columns: 1fr !important;
+  min-height: 0 !important;
+}
+[style*="grid-template-columns:220px 1fr"] > div:first-child,
+[style*="grid-template-columns: 220px 1fr"] > div:first-child {
+  flex-direction: row !important;
+  align-items: center;
+  gap: var(--s2) !important;
+  padding: var(--s3) var(--s5) !important;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+[style*="grid-template-columns:220px 1fr"] > div:first-child sc-for,
+[style*="grid-template-columns: 220px 1fr"] > div:first-child sc-for {
+  display: contents;
+}
+[style*="grid-template-columns:220px 1fr"] > div:first-child button,
+[style*="grid-template-columns: 220px 1fr"] > div:first-child button {
+  flex: none;
+  white-space: nowrap;
+}
+[style*="grid-template-columns:220px 1fr"] > div:first-child > div:first-child,
+[style*="grid-template-columns: 220px 1fr"] > div:first-child > div:first-child {
+  display: none !important;
+}
+[style*="grid-template-columns:220px 1fr"] > div:first-child > div:last-child,
+[style*="grid-template-columns: 220px 1fr"] > div:first-child > div:last-child {
+  margin-top: 0 !important;
+  padding-top: 0 !important;
+  border-top: 0 !important;
+  flex-direction: row !important;
+  align-items: center;
+  flex: none;
+}
+[style*="grid-template-columns:220px 1fr"] > div:first-child > div:last-child > div,
+[style*="grid-template-columns: 220px 1fr"] > div:first-child > div:last-child > div {
+  display: none !important;
+}
+[style*="grid-template-columns:220px 1fr"] > div:last-child,
+[style*="grid-template-columns: 220px 1fr"] > div:last-child {
+  padding: var(--s7) var(--s5) !important;
+}
+
+  /* Thẻ tổng hợp trên đầu bảng */
+[style*="grid-template-columns:repeat(4,1fr)"],
+[style*="grid-template-columns: repeat(4, 1fr)"] { grid-template-columns: repeat(2, 1fr) !important; }
+}
+@media (max-width: 640px) {
+[style*="grid-template-columns:repeat(4,1fr)"],
+[style*="grid-template-columns: repeat(4, 1fr)"],
+[style*="grid-template-columns:repeat(3,1fr)"],
+[style*="grid-template-columns: repeat(3, 1fr)"] { grid-template-columns: 1fr !important; }
+}
+
+/* Bảng lưới của B2/B3/B4/B6 vẫn cuộn ngang trong khung overflow:auto của nó —
+   cố ép về một cột thì các con số dính vào nhau, đọc còn khó hơn vuốt ngang. */
+
+/* B5 (sản phẩm) và B7 (tài khoản admin) dựng bằng <table> thật, khung bọc để
+   overflow:hidden. Ở màn hẹp trình duyệt bóp cột đến mức cột "Mô tả" xuống
+   dòng mỗi chữ một hàng. Cho khung cuộn ngang và đặt bề ngang tối thiểu, xử
+   lý giống các bảng còn lại. */
+@media (max-width: 900px) {
+[style*="grid-template-columns:220px 1fr"] table,
+[style*="grid-template-columns: 220px 1fr"] table {
+  min-width: 620px !important;
+}
+[style*="grid-template-columns:220px 1fr"] div:has(> table),
+[style*="grid-template-columns: 220px 1fr"] div:has(> table) {
+  overflow-x: auto !important;
+}
+}
+
+/* --- Ô nhập OTP (A2 bước 2, C1 xác thực & quên mật khẩu) --------------- */
+/* 6 ô cố định 44px + 5 khe 8px = 304px, rộng hơn lòng thẻ trên điện thoại nên
+   ô cuối tràn ra ngoài viền. Cho các ô co giãn đều theo bề ngang còn lại. */
+@media (max-width: 640px) {
+  .otp-box {
+    flex: 1 1 0 !important;
+    width: auto !important;
+    min-width: 0 !important;
+    max-width: 52px;
+  }
+  div:has(> .otp-box) { gap: var(--s2) !important; }
+}
+
+/* --- Ngăn chi tiết trượt từ phải --------------------------------------- */
+@media (max-width: 640px) {
+[style*="width:420px;max-width:92vw"],
+[style*="width: 420px; max-width: 92vw"],
+[style*="width:470px;max-width:92vw"],
+[style*="width: 470px; max-width: 92vw"],
+[style*="width:460px;max-width:92vw"],
+[style*="width: 460px; max-width: 92vw"] {
+  width: 100% !important;
+  max-width: 100% !important;
+}
+}
+
+/* --- Trang mục lục index.html ------------------------------------------ */
+/* File này có <style> riêng đặt sau link nên phải !important mới thắng. */
+@media (max-width: 640px) {
+  body > header { padding: var(--s5) !important; }
+  body > main, body > footer { padding-left: var(--s5) !important; padding-right: var(--s5) !important; }
+  body > main .grid { grid-template-columns: 1fr !important; }
+}

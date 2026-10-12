@@ -1,0 +1,12 @@
+# Kết quả giải nén từ bundle của khách hàng — tái tạo được bất cứ lúc nào bằng
+# `python tools/extract-bundle.py`, nặng vài MB (14 font woff2 + runtime + markup),
+# nên không đưa vào repo.
+tools/_raw/
+
+# Rác hệ điều hành
+Thumbs.db
+desktop.ini
+.DS_Store
+
+# Python cache sinh ra khi chạy tools/build-v3.py
+__pycache__/
