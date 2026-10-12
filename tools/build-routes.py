@@ -172,6 +172,11 @@ def render(src_text, code, depth):
             raise SystemExit("a1-buy.html: không tìm thấy khối A1 để chèn màn thông báo")
         t = t.replace(A1_MAIN, NOREF_MSG + A1_MAIN.replace(
             '<div style="display:flex', '<div class="homi-a1-main" style="display:flex', 1), 1)
+    # Cloudflare (Scrape Shield › Email Address Obfuscation) đổi email trong HTML thành
+    # "[email protected]"; trang dựng lại DOM bằng JS nên script giải mã của Cloudflare
+    # không cứu được. Đánh dấu email_off để Cloudflare bỏ qua cả trang.
+    if "<!--email_off-->" not in t:
+        t = t.replace("<body>", "<body>\n<!--email_off-->", 1).replace("</body>", "<!--/email_off-->\n</body>", 1)
     if "../index.html" in t or ".html?s=" in t:
         raise SystemExit("%s: còn link kiểu cũ" % FILE[code])
     return t
