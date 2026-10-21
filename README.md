@@ -39,7 +39,7 @@ Các trang ở thư mục gốc được sinh từ `screens/` bằng `python too
 | URL | Màn | File |
 |---|---|---|
 | `/<MÃ>` — vd `https://homi365.com.vn/SA2237` | A1 Form mua hàng, ô Mã giới thiệu lấy theo URL | `404.html` → `index.html` |
-| `/`, `/<mã sai>`, đường dẫn sai | Màn thông báo "Vui lòng dùng liên kết giới thiệu của thành viên HOMI365…" | `index.html` |
+| `/`, `/<mã sai>`, đường dẫn sai | Trang chủ hiển thị hình ảnh Triết lý HOMI365 | `index.html` |
 | `/policy?s=dieu-khoan-thanh-vien` | Chính sách | `policy.html` |
 | `/agent/dang-nhap` | C1 Đăng nhập thành viên | `agent/dang-nhap.html` |
 | `/agent/dang-ky` | A2 Đăng ký thành viên | `agent/dang-ky.html` |

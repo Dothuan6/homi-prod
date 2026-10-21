@@ -112,7 +112,9 @@ BOOT_A1 = """<script>
 </style>"""
 
 NOREF_MSG = """  <div class="homi-noref-msg" style="justify-content:center;padding:var(--s8) var(--s7) var(--s10)">
-    <div style="width:100%;max-width:1160px;background:var(--c12);border:1px solid rgba(154,163,176,.25);border-radius:var(--r-lg);box-shadow:var(--sh);padding:var(--s9) var(--s8);text-align:center;font-size:15px;line-height:1.6;color:var(--c4)">Vui lòng dùng liên kết giới thiệu của thành viên HOMI365 (dạng homi365.com.vn/&lt;mã giới thiệu&gt;) để tiếp tục mua hàng.</div>
+    <div style="width:100%;max-width:1160px;background:var(--c12);border:1px solid rgba(154,163,176,.25);border-radius:var(--r-lg);box-shadow:var(--sh);overflow:hidden;display:flex;justify-content:center">
+      <img src="assets/triet-ly-homi365.jpg" alt="Triết lý HOMI365 - Một gia đình, hai khách hàng, một hành trình chăm sóc" style="width:100%;max-width:1160px;height:auto;display:block">
+    </div>
   </div>
 """
 A1_MAIN = """  <sc-if value="{{isA1}}" hint-placeholder-val="{{true}}">
@@ -188,15 +190,15 @@ def main():
         s = f.read_text(encoding="utf-8")
         s2 = fix_links(s)
         if s2 != s:
-            f.write_text(s2, encoding="utf-8")
+            f.write_text(s2, encoding="utf-8", newline="\n")
     cache = {c: (SRC / f).read_text(encoding="utf-8") for c, f in FILE.items()}
     for path, code in OUT:
         out = SITE / path
         out.parent.mkdir(parents=True, exist_ok=True)
-        out.write_text(render(cache[code], code, path.count("/")), encoding="utf-8")
+        out.write_text(render(cache[code], code, path.count("/")), encoding="utf-8", newline="\n")
         print("  %-26s <- %s" % (path, FILE[code]))
-    (SITE / "404.html").write_text(PAGE_404, encoding="utf-8")
-    (SITE / ".nojekyll").write_text("", encoding="utf-8")
+    (SITE / "404.html").write_text(PAGE_404, encoding="utf-8", newline="\n")
+    (SITE / ".nojekyll").write_text("", encoding="utf-8", newline="\n")
     # Netlify: rewrite 200 (không đổi URL, không qua 404). File có thật luôn
     # được ưu tiên hơn rule, nên /css/..., /agent/dang-nhap... không bị ảnh hưởng.
     rules = ["# Sinh bởi tools/build-routes.py — không sửa tay."]
@@ -206,7 +208,7 @@ def main():
         rules.append("/%-22s /%-26s 200" % (path[:-5], path))
     rules.append("# /<MÃ GIỚI THIỆU>, vd /SA2237 -> form mua hàng A1")
     rules.append("/%-22s /%-26s 200" % (":code", "index.html"))
-    (SITE / "_redirects").write_text("\n".join(rules) + "\n", encoding="utf-8")
+    (SITE / "_redirects").write_text("\n".join(rules) + "\n", encoding="utf-8", newline="\n")
     print("  404.html, .nojekyll, _redirects (Netlify)")
 
 
