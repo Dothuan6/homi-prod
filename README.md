@@ -62,3 +62,16 @@ Chạy được cả khi gắn domain riêng (gốc `/`) lẫn `dothuan6.github.
 Mã giới thiệu hợp lệ là danh sách cố định `VALID_REF` trong `tools/build-routes.py`
 (site tĩnh, không có database). Thêm/bớt mã: sửa danh sách, chạy lại script, deploy lại.
 Netlify dùng `_redirects` (trả 200); GitHub Pages dùng `404.html`.
+
+## PRD Nhóm A — tab 10.23 (23/10/2026)
+
+Áp bằng `tools/update_prd1023.py` (build-routes.py tự gọi, chạy lại nhiều lần không sao):
+
+- Mã đơn = `<Mã thành viên của link>-<4 số>`, vd `SA2237-0001`; hiện trên modal QR kèm nút Sao chép,
+  trùng mã ở B6 và nội dung chuyển khoản. Bản mẫu đếm số thứ tự trong localStorage của trình duyệt.
+- Bấm Thanh toán tạo đơn ("Đơn vừa đặt"); bấm lại cùng thông tin dùng lại mã cũ, đổi thông tin thì mã mới.
+- Quá 1 tiếng chưa tải ảnh: tải ảnh báo "Đơn hàng đã hết hạn thanh toán, vui lòng đặt lại", Đặt lại thì mã mới.
+  Xem nhanh: `/SA2237#qr-het-han`.
+- 4 câu hỏi sức khỏe tick sẵn "Không", ô "Có" khoá.
+- B6: thêm trạng thái + bộ lọc "Đơn vừa đặt" và "Hủy do hết hạn thanh toán" (chỉ xem, không có nút thao tác);
+  đơn mẫu tự mua `VMK7998-0004`. Xem nhanh: `/admin/don-hang#vua-dat`, `#huy-het-han`, `#tu-mua`.

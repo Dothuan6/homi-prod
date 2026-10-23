@@ -185,6 +185,11 @@ def render(src_text, code, depth):
 
 
 def main():
+    # (23/10) PRD Nhóm A tab 10.23 — áp lên screens/ trước khi sinh trang.
+    _prd = HERE / "update_prd1023.py"
+    if _prd.exists():
+        import runpy
+        runpy.run_path(str(_prd), run_name="__main__")
     # Nguồn screens/ cũng dùng full URL cho link hiển thị.
     for f in SRC.glob("*.html"):
         s = f.read_text(encoding="utf-8")

@@ -1271,7 +1271,7 @@ class Component extends DCLogic {
     screen: 'A1',
     buyerName: '', buyerPhone: '', buyerEmail: '', buyerCccd: '', buyerAddress: '', buyerDob: '', buyerBankAccount: '',
     cn02Package: '1y',
-    showQRPayment: false, orderId: 'DH923983',
+    showQRPayment: false, orderId: 'TTB4123-0003',
     payStage: 'idle', orderCreated: false,
     showPaymentSuccess: false,
     showOrderLookup: false, orderLookupInput: '', orderLookupError: false,
@@ -1303,7 +1303,7 @@ class Component extends DCLogic {
     orderActivationCode: '', orderCodeError: '',
     copyPersonalLabel: 'Copy link',
     banks: null, provinceData: null,
-    bankQuery: '', bankOpen: false, bankManual: false, bankManualText: '', buyHealth: {},
+    bankQuery: '', bankOpen: false, bankManual: false, bankManualText: '', buyHealth: { 0: 'no', 1: 'no', 2: 'no', 3: 'no' },
     provinceQuery: '', provinceOpen: false,
     wardQuery: '', wardOpen: false,
     accountHolder: '', buyTcChecked: false,
@@ -1352,7 +1352,7 @@ class Component extends DCLogic {
   // hàng. Bản mẫu dùng chung một hồ sơ cho mọi SĐT đã đăng ký; bản thật lấy
   // từ đơn mới nhất của chính tài khoản vừa đăng nhập.
   BUYER_LAST_ORDER = {
-    orderId: 'DH100077', orderDate: '12/08/2026',
+    orderId: 'HTMT0083-0001', orderDate: '12/08/2026',
     buyerName: 'Hoàng Thị Mỹ Trinh', buyerEmail: 'trinh.htm@gmail.com',
     buyerCccd: '079191000083', buyerAddress: 'Số 36 đường 27A',
     buyerDob: '22/01/1991', buyerBankAccount: '0071001234567',
@@ -1386,8 +1386,8 @@ class Component extends DCLogic {
   // Đăng nhập được nhưng hồ sơ chưa qua bước Head duyệt.
   PENDING_PHONES = ['0938884123'];
   ORDERS_BY_PHONE = {
-    '0901111111': { orderId: 'DH100234', buyerName: 'Nguyễn Văn A', buyerEmail: 'nguyenvana@gmail.com', buyerCccd: '079203001234', buyerAddress: '12 Nguyễn Huệ', buyerDob: '15/03/1992', agentId: 1 },
-    '0902222222': { orderId: 'DH100511', buyerName: 'Lý Thị Hoa', buyerEmail: 'lythihoa@gmail.com', buyerCccd: '079203005678', buyerAddress: '45 Lê Lợi', buyerDob: '02/11/1990', agentId: 2 }
+    '0901111111': { orderId: 'VMK7998-0002', buyerName: 'Nguyễn Văn A', buyerEmail: 'nguyenvana@gmail.com', buyerCccd: '079203001234', buyerAddress: '12 Nguyễn Huệ', buyerDob: '15/03/1992', agentId: 1 },
+    '0902222222': { orderId: 'LVC5456-0003', buyerName: 'Lý Thị Hoa', buyerEmail: 'lythihoa@gmail.com', buyerCccd: '079203005678', buyerAddress: '45 Lê Lợi', buyerDob: '02/11/1990', agentId: 2 }
   };
 
   CN02_PACKAGES = [
@@ -1436,7 +1436,7 @@ class Component extends DCLogic {
       action:'Cập nhật', before:'Copper', after:'Silver',
       evidence:'PD-2026-014-da-ky.pdf', ip:'113.161.46.118' },
     { time:'17/09/2026 08:55', actor:'Nguyễn Thị Hạnh', role:'Admin',
-      module:'Đơn hàng', target:'DH923983',
+      module:'Đơn hàng', target:'TTB4123-0003',
       action:'Duyệt', before:'Chờ đối soát', after:'Đã thanh toán',
       evidence:'GD-VCB-77120394', ip:'113.161.46.118' },
     { time:'17/09/2026 08:40', actor:'Hệ thống', role:'Tự động',
@@ -1476,7 +1476,7 @@ class Component extends DCLogic {
       action:'Từ chối', before:'Chờ duyệt', after:'Từ chối',
       evidence:'—', ip:'118.70.12.4' },
     { time:'14/09/2026 13:47', actor:'Nguyễn Thị Hạnh', role:'Admin',
-      module:'Đơn hàng', target:'DH100511',
+      module:'Đơn hàng', target:'LVC5456-0003',
       action:'Từ chối', before:'Chờ đối soát', after:'Từ chối',
       evidence:'—', ip:'113.161.46.118' }
   ];
@@ -1498,7 +1498,7 @@ class Component extends DCLogic {
       linkedTo:'Hồ sơ Đặng Văn Phúc', by:'Đặng Văn Phúc',
       time:'15/09/2026 15:26', size:'795 KB' },
     { name:'uy-nhiem-chi-dh923983.jpg', kind:'Ảnh', module:'Đơn hàng',
-      linkedTo:'Đơn DH923983', by:'Nguyễn Văn A',
+      linkedTo:'Đơn TTB4123-0003', by:'Nguyễn Văn A',
       time:'15/09/2026 08:11', size:'1,0 MB' }
   ];
 
@@ -1526,44 +1526,66 @@ class Component extends DCLogic {
       status:'specialist_approved', tree:[] }
   ];
 
-  ORDER_FILTERS = [['all','Tất cả'],['order_pending','Chờ đối soát'],['order_paid','Đã thanh toán'],['order_rejected','Từ chối']];
+  ORDER_FILTERS = [['all','Tất cả'],['order_new','Đơn vừa đặt'],['order_pending','Chờ đối soát'],['order_paid','Đã thanh toán'],['order_rejected','Từ chối'],['order_expired','Hủy do hết hạn thanh toán']];
 
   // (10/10) Thông tin sức khỏe cá nhân khách khai lúc mua (A1), lưu theo đơn.
   HEALTH_Q = ["Người bị bệnh tâm thần, bệnh phong, bệnh ung thư;", "Người bị tàn tật hoặc thương tật vĩnh viễn từ 50% trở lên;", "Người đang trong thời gian điều trị nội trú ốm đau, bệnh tật, tai nạn;", "Người mất năng lực hoặc bị hạn chế năng lực hành vi dân sự."];
-  ORDER_HEALTH = { DH923983: ['no','no','no','no'], DH100511: ['no','yes','no','no'],
-                   DH100234: ['no','no','no','no'], DH100088: ['no','no','no','no'] };
+  ORDER_HEALTH = { 'TTB4123-0003': ['no','no','no','no'], 'LVC5456-0003': ['no','no','no','no'],
+                   'VMK7998-0002': ['no','no','no','no'], 'LVC5456-0002': ['no','no','no','no'],
+                   'TTB4123-0004': ['no','no','no','no'], 'VMK7998-0004': ['no','no','no','no'],
+                   'VMK7998-0003': ['no','no','no','no'] };
   makeOrders() {
     const raw = [
-      { id:'DH923983', buyer:'Nguyễn Văn A', phone:'0901111111', email:'nguyenvana@gmail.com',
+      // (23/10) Đơn vừa đặt: khách đã bấm Thanh toán, chưa tải ảnh — Admin chỉ xem.
+      { id:'TTB4123-0004', buyer:'Trịnh Văn Long', phone:'0906666666', email:'trinhvanlong@gmail.com',
+        address:'15 Lý Tự Trọng, Phường Sài Gòn, TP. Hồ Chí Minh',
+        pkg:'HOMI365-01 · Gói 1 năm', amountNum:10000000, referrer:'Trần Thị Bích', refCode:'TTB4123',
+        date:'03/09/2026 10:05', status:'order_new', proof:null, activationCode:null,
+        auditLog:[{label:'Khách bấm Thanh toán — tạo đơn (Đơn vừa đặt)', actor:'Hệ thống', time:'03/09/2026 10:05'}] },
+      // (23/10) Đơn tự mua: thành viên mua qua link của chính mình, xử lý như đơn thường.
+      { id:'VMK7998-0004', buyer:'Vũ Minh Khang', phone:'0934567998', email:'vuminhkhang@gmail.com',
+        address:'27 Bạch Đằng, Phường Hải Châu, TP. Đà Nẵng',
+        pkg:'HOMI365-01 · Gói nửa năm', amountNum:6000000, referrer:'Vũ Minh Khang', refCode:'VMK7998',
+        date:'03/09/2026 08:40', status:'order_pending', proof:'bill-VMK7998-0004.jpg', activationCode:null,
+        auditLog:[{label:'Khách bấm Thanh toán — tạo đơn (Đơn vừa đặt)', actor:'Hệ thống', time:'03/09/2026 08:40'},
+                  {label:'Khách tải ảnh chuyển khoản — chuyển Chờ đối soát', actor:'Vũ Minh Khang', time:'03/09/2026 08:52'}] },
+      // (23/10) Quá 1 tiếng chưa tải ảnh -> hệ thống tự hủy, Admin không thao tác.
+      { id:'VMK7998-0003', buyer:'Lâm Thị Thu', phone:'0907777777', email:'lamthithu@gmail.com',
+        address:'9 Nguyễn Văn Linh, Phường Thanh Khê, TP. Đà Nẵng',
+        pkg:'HOMI365-01 · Gói 1 năm', amountNum:10000000, referrer:'Vũ Minh Khang', refCode:'VMK7998',
+        date:'01/09/2026 20:15', status:'order_expired', proof:null, activationCode:null,
+        auditLog:[{label:'Khách bấm Thanh toán — tạo đơn (Đơn vừa đặt)', actor:'Hệ thống', time:'01/09/2026 20:15'},
+                  {label:'Hủy do hết hạn thanh toán (quá 1 tiếng chưa tải ảnh chuyển khoản)', actor:'Hệ thống', time:'01/09/2026 21:15'}] },
+      { id:'TTB4123-0003', buyer:'Nguyễn Văn A', phone:'0901111111', email:'nguyenvana@gmail.com',
         address:'12 Nguyễn Huệ, Phường Bến Nghé, TP. Hồ Chí Minh',
         pkg:'HOMI365-01 · Gói 1 năm', amountNum:10000000, referrer:'Trần Thị Bích', refCode:'TTB4123',
-        date:'03/09/2026 09:12', status:'order_pending', proof:'bill-DH923983.jpg', activationCode:null,
+        date:'03/09/2026 09:12', status:'order_pending', proof:'bill-TTB4123-0003.jpg', activationCode:null,
         auditLog:[{label:'Khách tạo đơn', actor:'Hệ thống', time:'03/09/2026 09:12'},
                   {label:'Khách tải ảnh chuyển khoản', actor:'Nguyễn Văn A', time:'03/09/2026 09:20'}] },
-      { id:'DH100511', buyer:'Lý Thị Hoa', phone:'0902222222', email:'lythihoa@gmail.com',
+      { id:'LVC5456-0003', buyer:'Lý Thị Hoa', phone:'0902222222', email:'lythihoa@gmail.com',
         address:'45 Lê Lợi, Phường Bến Thành, TP. Hồ Chí Minh',
         pkg:'HOMI365-01 · Gói nửa năm', amountNum:6000000, referrer:'Lê Văn Cường', refCode:'LVC5456',
-        date:'02/09/2026 15:40', status:'order_pending', proof:'bill-DH100511.jpg', activationCode:null,
+        date:'02/09/2026 15:40', status:'order_pending', proof:'bill-LVC5456-0003.jpg', activationCode:null,
         auditLog:[{label:'Khách tạo đơn', actor:'Hệ thống', time:'02/09/2026 15:40'},
                   {label:'Khách tải ảnh chuyển khoản', actor:'Lý Thị Hoa', time:'02/09/2026 15:52'}] },
-      { id:'DH100234', buyer:'Đỗ Anh Tuấn', phone:'0903333333', email:'doanhtuan@gmail.com',
+      { id:'VMK7998-0002', buyer:'Đỗ Anh Tuấn', phone:'0903333333', email:'doanhtuan@gmail.com',
         address:'88 Trần Hưng Đạo, Phường Cầu Ông Lãnh, TP. Hồ Chí Minh',
         pkg:'HOMI365-01 · Gói 1 năm', amountNum:10000000, referrer:'Vũ Minh Khang', refCode:'VMK7998',
-        date:'30/08/2026 08:05', status:'order_paid', proof:'bill-DH100234.jpg', activationCode:'ACT-100481', activatedAt:'30/08/2026',
+        date:'30/08/2026 08:05', status:'order_paid', proof:'bill-VMK7998-0002.jpg', activationCode:'ACT-100481', activatedAt:'30/08/2026',
         auditLog:[{label:'Khách tạo đơn', actor:'Hệ thống', time:'30/08/2026 08:05'},
                   {label:'Khách tải ảnh chuyển khoản', actor:'Đỗ Anh Tuấn', time:'30/08/2026 08:19'},
                   {label:'Admin xác nhận tiền về (chờ Head)', actor:'Admin', time:'30/08/2026 09:10'},
                   {label:'Head xác nhận & cấp mã kích hoạt ACT-100481', actor:'Head', time:'30/08/2026 10:02'}] },
-      { id:'DH100088', buyer:'Ngô Thị Em', phone:'0904444444', email:'ngothiem@gmail.com',
+      { id:'LVC5456-0002', buyer:'Ngô Thị Em', phone:'0904444444', email:'ngothiem@gmail.com',
         address:'7 Nguyễn Trãi, Phường Bến Thành, TP. Hồ Chí Minh',
         pkg:'HOMI365-01 · Gói 1 năm', amountNum:10000000, referrer:'Lê Văn Cường', refCode:'LVC5456',
-        date:'28/08/2026 11:30', status:'order_paid', proof:'bill-DH100088.jpg', activationCode:'ACT-100337', activatedAt:'28/08/2026',
+        date:'28/08/2026 11:30', status:'order_paid', proof:'bill-LVC5456-0002.jpg', activationCode:'ACT-100337', activatedAt:'28/08/2026',
         auditLog:[{label:'Khách tạo đơn', actor:'Hệ thống', time:'28/08/2026 11:30'},
                   {label:'Head xác nhận & cấp mã kích hoạt ACT-100337', actor:'Head', time:'28/08/2026 14:00'}] },
-      { id:'DH100012', buyer:'Phạm Quốc Bảo', phone:'0905555555', email:'pqbao@gmail.com',
+      { id:'TTB4123-0002', buyer:'Phạm Quốc Bảo', phone:'0905555555', email:'pqbao@gmail.com',
         address:'201 Cách Mạng Tháng 8, Phường Hoà Hưng, TP. Hồ Chí Minh',
         pkg:'HOMI365-01 · Gói nửa năm', amountNum:6000000, referrer:'Trần Thị Bích', refCode:'TTB4123',
-        date:'26/08/2026 19:12', status:'order_rejected', proof:'bill-DH100012.jpg', activationCode:null,
+        date:'26/08/2026 19:12', status:'order_rejected', proof:'bill-TTB4123-0002.jpg', activationCode:null,
         auditLog:[{label:'Khách tạo đơn', actor:'Hệ thống', time:'26/08/2026 19:12'},
                   {label:'Từ chối: số tiền chuyển khoản không khớp', actor:'Admin', time:'27/08/2026 09:00'}] }
     ];
@@ -1728,9 +1750,24 @@ class Component extends DCLogic {
       delivered: ['rgba(47,122,72,.14)', '#2F7A48', 'Giao hàng thành công'],
       order_pending: ['rgba(150,92,10,.15)', '#965C0A', 'Chờ đối soát'],
       order_paid: ['rgba(47,122,72,.14)', '#2F7A48', 'Đã thanh toán · đã cấp mã'],
-      order_rejected: ['rgba(192,57,43,.12)', '#C0392B', 'Từ chối']
+      order_rejected: ['rgba(192,57,43,.12)', '#C0392B', 'Từ chối'],
+      order_new: ['rgba(30,58,102,.1)', '#1E3A66', 'Đơn vừa đặt'],
+      order_expired: ['rgba(154,163,176,.2)', '#5B6472', 'Hủy do hết hạn thanh toán']
     };
     return map[status] || ['rgba(154,163,176,.18)', '#5B6472', status];
+  }
+
+  // (23/10) PRD Nhóm A 10.23: mã đơn = <Mã thành viên của link>-<4 số>,
+  // đếm riêng từng link, bắt đầu 0001, không dùng lại. Bản mẫu đếm trong
+  // localStorage của trình duyệt; bản thật sinh ở BE, khoá chống trùng khi tạo đồng thời.
+  ORDER_SEQ_BASE = { TTB4123: 4, LVC5456: 3, VMK7998: 4 };
+  nextOrderId() {
+    const ref = (window.__REF_CODE || 'HTMT0083').toUpperCase();
+    let n = this.ORDER_SEQ_BASE[ref] || 0;
+    try { n = Math.max(n, parseInt(localStorage.getItem('__homi_seq_' + ref) || '0', 10) || 0); } catch (e) {}
+    n += 1;
+    try { localStorage.setItem('__homi_seq_' + ref, String(n)); } catch (e) {}
+    return ref + '-' + String(n).padStart(4, '0');
   }
 
   aliasOf(name, phone) {
@@ -1786,7 +1823,7 @@ class Component extends DCLogic {
     for (let i = 1; i <= 24; i++) {
       const status = statuses[i % statuses.length];
       const d = '0' + (1 + i % 9) + '/08/2026';
-      const ord = ['received', 'available'].includes(status) ? '—' : 'DH' + (100000 + i * 13);
+      const ord = ['received', 'available'].includes(status) ? '—' : ['TTB4123', 'LVC5456', 'VMK7998', 'NTE3112'][i % 4] + '-' + String(11 + i).padStart(4, '0');
       const track = ['shipped', 'delivered'].includes(status)
         ? 'VN' + (830000000 + i * 137) : '—';
       const STEPS = ['received', 'available', 'assigned', 'shipped', 'delivered'];
@@ -1861,7 +1898,7 @@ class Component extends DCLogic {
     // (20) A1 sau UAT 02/10 — tuổi người mua + điều kiện bật nút Thanh toán.
     const buyerDobError = this.dobError(s.buyerDob);
     // (12/10) Đủ 4 mục Thông tin sức khỏe mới cho thanh toán.
-    const healthDoneCount = [0, 1, 2, 3].filter(i => ['no', 'yes'].includes((s.buyHealth || {})[i])).length;
+    const healthDoneCount = 4; // (23/10) PRD Nhóm A 10.23: 4 mục luôn "Không"
     const payOk = s.buyTcChecked && s.payStage !== 'sending' && !buyerDobError && healthDoneCount === 4;
 
     // A2
@@ -2351,6 +2388,10 @@ class Component extends DCLogic {
         confirmLabel: 'Xác nhận tiền về và kích hoạt mã đơn hàng (Admin)',
         stageNote: selOrderRaw.status === 'order_pending'
           ? 'Đang chờ admin đối soát tiền về. Xác nhận xong hệ thống gửi email kèm mã kích hoạt cho khách ngay.'
+          : selOrderRaw.status === 'order_new'
+          ? 'Đơn vừa đặt: khách đã bấm Thanh toán nhưng chưa tải ảnh chuyển khoản. Chỉ xem, chưa thao tác được. Quá 1 tiếng chưa tải ảnh, hệ thống tự hủy đơn.'
+          : selOrderRaw.status === 'order_expired'
+          ? 'Đơn đã hủy do hết hạn thanh toán (quá 1 tiếng chưa tải ảnh chuyển khoản). Không nhận ảnh, không tính ưu đãi, không gửi email, không thao tác.'
           : (selOrderRaw.status === 'order_rejected' ? 'Đơn đã bị từ chối.' : null),
         actHint: 'Chọn mã kích hoạt còn Sẵn hàng trong kho rồi xác nhận. Hệ thống gán mã cho đơn, chuyển mã sang Đã gán đơn hàng và gửi email báo thanh toán thành công kèm mã kích hoạt cho khách.' };
     }
@@ -2474,19 +2515,32 @@ class Component extends DCLogic {
       submitPayment: () => {
         if (s.payStage === 'sending') return;      // chặn bấm dồn
         // Đơn đã tạo thì mở lại đúng đơn đó, không sinh mã đơn mới.
-        if (s.orderCreated) { this.setState({ showQRPayment: true }); return; }
+        // (23/10) PRD Nhóm A 10.23: cùng phiên, cùng thông tin, đơn chưa hết hạn -> dùng lại đơn và mã cũ.
+        const sig = [s.buyerName, s.buyerPhone, s.buyerEmail, s.buyerCccd, s.cn02Package].join('|');
+        if (s.orderCreated && !s.orderExpired && s.orderSig === sig) { this.setState({ showQRPayment: true }); return; }
         this.setState({ payStage: 'sending' });
         clearTimeout(this.__payTimer);
         // Bản mẫu: 1,2s cho thấy trạng thái chờ. Bản thật đặt ngưỡng chờ
         // 5 giây, quá thì chuyển sang payStage 'timeout'.
         this.__payTimer = setTimeout(() => this.setState({
-          payStage: 'idle', orderCreated: true, showQRPayment: true
+          payStage: 'idle', orderCreated: true, showQRPayment: true,
+          orderId: this.nextOrderId(), orderSig: sig, orderCreatedAt: Date.now(),
+          orderExpired: false, orderIdCopied: false
         }), 1200);
       },
       openQRPayment: () => this.setState({ showQRPayment: true }),
       closeQRPayment: () => this.setState({ showQRPayment: false }),
       showQRPayment: s.showQRPayment, orderId: s.orderId, qrModules,
-      confirmQRPayment: () => this.setState({ showQRPayment: false, showPaymentSuccess: true }),
+      // (23/10) PRD Nhóm A 10.23: "Đơn vừa đặt" quá 1 tiếng chưa tải ảnh -> đã hủy, không nhận ảnh.
+      confirmQRPayment: () => (s.orderExpired || (s.orderCreatedAt && Date.now() - s.orderCreatedAt > 3600000))
+        ? this.setState({ orderExpired: true })
+        : this.setState({ showQRPayment: false, showPaymentSuccess: true }),
+      orderExpired: !!s.orderExpired, qrUploadOpen: !s.orderExpired,
+      reorderExpired: () => this.setState({ orderCreated: false, orderExpired: false, showQRPayment: false, orderSig: '' }),
+      copyOrderId: () => { try { navigator.clipboard.writeText(s.orderId); } catch (e) {}
+        this.setState({ orderIdCopied: true }); clearTimeout(this.__copyTimer);
+        this.__copyTimer = setTimeout(() => this.setState({ orderIdCopied: false }), 1500); },
+      copyOrderIdLabel: s.orderIdCopied ? 'Đã sao chép' : 'Sao chép',
       showPaymentSuccess: s.showPaymentSuccess,
       choosRegisterSeller: () => (s.uplineRank === 'bronze'
         ? this.setState({ showPaymentSuccess: false, showUplineBlockedModal: true })
@@ -3091,9 +3145,9 @@ class Component extends DCLogic {
       healthDoneCount, healthMissing: healthDoneCount < 4,
       // (10/10) Thông tin sức khỏe: mỗi mục chọn Không hoặc Có (bấm lại để bỏ chọn).
       healthRows: this.HEALTH_Q.map((q, i) => { const v = (s.buyHealth || {})[i];
-        const set = (x) => this.setState({ buyHealth: { ...(s.buyHealth || {}), [i]: v === x ? undefined : x } });
+        const set = () => {}; // (23/10) PRD Nhóm A 10.23: tick sẵn "Không", ô "Có" khoá
         const box = (on) => on ? ['#1E3A66', '#1E3A66', '✓'] : ['rgba(154,163,176,.8)', 'transparent', ''];
-        const [nb, nbg, nm] = box(v === 'no'), [yb, ybg, ym] = box(v === 'yes');
+        const [nb, nbg, nm] = box(true), yb = 'rgba(154,163,176,.35)', ybg = 'rgba(154,163,176,.15)', ym = '';
         return { no: i + 1, q, onNo: () => set('no'), onYes: () => set('yes'),
           noBorder: nb, noBg: nbg, noMark: nm, yesBorder: yb, yesBg: ybg, yesMark: ym }; }),
       toggleBank: () => this.setState({ bankOpen: !s.bankOpen }),
